@@ -1,5 +1,76 @@
 // These are additional JavaScript functions you can add to your existing code
+// Custom cursor
+document.addEventListener('DOMContentLoaded', () => {
+    const cursorBlob = document.querySelector('.cursor-blob');
 
+        if (cursorBlob) {
+            document.addEventListener('mousemove', (e) => {
+                cursorBlob.style.left = e.clientX + 'px';
+                cursorBlob.style.top = e.clientY + 'px';
+            });
+        }
+
+// Scroll animations with GSAP
+    gsap.registerPlugin(ScrollTrigger);
+
+        // Animate section headings
+        gsap.utils.toArray('section h2').forEach(heading => {
+            gsap.from(heading, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: heading,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+        // Animate skill icons
+        gsap.utils.toArray('.skill-icon').forEach((skill, i) => {
+            gsap.from(skill, {
+                y: 50,
+                opacity: 0,
+                duration: 0.5,
+                delay: i * 0.1,
+                scrollTrigger: {
+                    trigger: '#skills',
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+        // Animate project cards
+        gsap.utils.toArray('.project-card').forEach((card, i) => {
+            gsap.from(card, {
+                y: 100,
+                opacity: 0,
+                duration: 0.6,
+                delay: i * 0.1,
+                scrollTrigger: {
+                    trigger: '#projects',
+                    start: "top 60%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+    // Show/hide back to top button
+    const backToTop = document.querySelector('.back-to-top');
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTop.classList.add('opacity-100');
+            backToTop.classList.remove('opacity-0');
+        } else {
+            backToTop.classList.add('opacity-0');
+            backToTop.classList.remove('opacity-100');
+        }
+        });
+    }
+});
 // Section visibility animation
 function animateSections() {
     const sections = document.querySelectorAll('section');
