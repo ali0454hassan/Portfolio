@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - SQA & Web Developer Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        .cursor-blob {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #667eea;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .back-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Add this to your <style> tag in <head> */
+        body.dark-mode,
+        .dark-mode .navbar {
+          background-color: #181a1b !important;
+          color: #ffffff !important;
+        }
+        .dark-mode .navbar,
+        .dark-mode .navbar-brand,
+        .dark-mode .nav-link {
+          color: #ffffff !important;
+        }
+        .dark-mode .bg-white,
+        .dark-mode .bg-light,
+        .dark-mode .card,
+        .dark-mode .rounded-lg,
+        .dark-mode .shadow-lg {
+          background-color: #23272b !important;
+          color: #ffffff !important;
+        }
+        .dark-mode .text-gradient {
+          background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200" x-data="{ darkMode: false, isOpen: false }">
+    <!-- Custom Cursor -->
+    <div class="cursor-blob hidden md:block"></div>
+
+    <!-- Header -->
+    <header class="fixed w-full bg-white dark:bg-gray-900 shadow-sm z-50" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center" :class="{ 'py-2': scrolled, 'py-4': !scrolled }">
+            <a href="index.html" class="text-2xl font-bold text-gradient">DevPortfolio</a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html#home" class="nav-link font-medium">Home</a>
+                <a href="index.html#about" class="nav-link font-medium">About</a>
+                <a href="index.html#skills" class="nav-link font-medium">Skills</a>
+                <a href="index.html#projects" class="nav-link font-medium">Projects</a>
+                <a href="index.html#contact" class="nav-link font-medium">Contact</a>
+            </nav>
+            
+            <!-- Mobile Menu Button -->
+            <button @click="isOpen = !isOpen" class="md:hidden focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            
+            <!-- Dark Mode Toggle -->
+            <button id="darkModeToggle" class="focus:outline-none ml-4" title="Toggle Dark Mode">
+                <i id="darkModeIcon" class="fas fa-moon text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div x-show="isOpen" class="md:hidden bg-white dark:bg-gray-900 shadow-md" @click.away="isOpen = false">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                <a href="index.html#home" @click="isOpen = false" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">Home</a>
+                <a href="index.html#about" @click="isOpen = false" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">About</a>
+                <a href="index.html#skills" @click="isOpen = false" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">Skills</a>
+                <a href="index.html#projects" @click="isOpen = false" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">Projects</a>
+                <a href="index.html#contact" @click="isOpen = false" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Project Details Section -->
+    <section class="pt-32 pb-16" id="project-content">
+        <div class="container mx-auto px-4">
+            <!-- Back Button -->
+            <div class="mb-8">
+                <a href="index.html#projects" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Projects
+                </a>
+            </div>
+
+            <!-- Project Header with dark overlay on image -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8 relative">
+                <div class="relative">
+                    <img id="project-image" src="./Assets/VisionAI-obj.png" alt="Project Image" class="w-full h-96 object-cover">
+                    <!-- Dark overlay for better text visibility -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                    <!-- Title & Description over image -->
+                    <div class="absolute bottom-8 left-0 right-0 px-8">
+                        <h1 id="project-title" class="text-4xl font-bold mb-2 text-white drop-shadow-lg">Loading...</h1>
+                        <p id="project-description" class="text-xl text-gray-100 drop-shadow">Loading project details...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Info Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Content -->
+                <div class="lg:col-span-2">
+                    <!-- Project Overview -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                        <h2 class="text-2xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-info-circle mr-3 text-indigo-600"></i>
+                            Project Overview
+                        </h2>
+                        <div id="project-overview">
+                            <p class="text-gray-600 dark:text-gray-400">Loading overview...</p>
+                        </div>
+                    </div>
+
+                    <!-- Key Features -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                        <h2 class="text-2xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-star mr-3 text-indigo-600"></i>
+                            Key Features
+                        </h2>
+                        <div id="project-features" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <p class="text-gray-600 dark:text-gray-400">Loading features...</p>
+                        </div>
+                    </div>
+
+                    <!-- Technical Implementation -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                        <h2 class="text-2xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-code mr-3 text-indigo-600"></i>
+                            Technical Implementation
+                        </h2>
+                        <div id="project-implementation">
+                            <p class="text-gray-600 dark:text-gray-400">Loading implementation details...</p>
+                        </div>
+                    </div>
+
+                    <!-- Project Gallery -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-images mr-3 text-indigo-600"></i>
+                            Project Gallery
+                        </h2>
+                        <div id="project-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <p class="text-gray-600 dark:text-gray-400">Loading gallery...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <!-- Project Info -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold mb-4">Project Information</h3>
+                        <div id="project-info" class="space-y-3">
+                            <p class="text-gray-600 dark:text-gray-400">Loading project information...</p>
+                        </div>
+                    </div>
+
+                    <!-- Technologies Used -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold mb-4">Technologies Used</h3>
+                        <div id="project-technologies" class="flex flex-wrap gap-2">
+                            <p class="text-gray-600 dark:text-gray-400">Loading technologies...</p>
+                        </div>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold mb-4">Project Links</h3>
+                        <div id="project-links" class="space-y-3">
+                            <p class="text-gray-600 dark:text-gray-400">Loading links...</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact for Project -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Interested in This Project?</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Want to know more about this project or discuss similar work? Let's connect!
+                        </p>
+                        <a href="index.html#contact" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Get in Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="index.html" class="text-2xl font-bold text-gradient">DevPortfolio</a>
+                    <p class="text-gray-400 mt-2">Creating exceptional web experiences</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="index.html#home" class="hover:text-indigo-400 transition duration-300">Home</a>
+                    <a href="index.html#about" class="hover:text-indigo-400 transition duration-300">About</a>
+                    <a href="index.html#skills" class="hover:text-indigo-400 transition duration-300">Skills</a>
+                    <a href="index.html#projects" class="hover:text-indigo-400 transition duration-300">Projects</a>
+                    <a href="index.html#contact" class="hover:text-indigo-400 transition duration-300">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">© 2025 Ali Hassan. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <p class="text-gray-400">Designed & Built with <i class="fas fa-heart text-red-500"></i></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition duration-300 z-50 back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Project data (add images array for gallery)
+        const projectData = {
+            'visionai': {
+                title: 'VisionAI - Real-time Object Detection',
+                description: 'Advanced computer vision application with machine learning capabilities',
+                image: './Assets/VisionAI-obj.png',
+                images: [
+                    './Assets/VisionAI-obj.png',
+                    './Assets/visionai-extra1.png',
+                    './Assets/visionai-extra2.png'
+                ],
+                status: 'Completed',
+                duration: '3 Months',
+                teamSize: '4 Members',
+                role: 'Full Stack Developer',
+                technologies: ['HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS', 'Flask', 'Python', 'YOLO', 'OpenCV'],
+                overview: `VisionAI is a cutting-edge web application that leverages YOLO (You Only Look Once) deep learning model 
+                          to perform real-time object detection. The application features an intuitive web interface built with 
+                          Flask and provides adjustable accuracy rates to suit different use cases. This project demonstrates 
+                          the practical implementation of computer vision technology in web applications, making advanced AI 
+                          capabilities accessible through a user-friendly interface.`,
+                features: [
+                    { icon: 'fas fa-camera', title: 'Real-time Detection', desc: 'Live object detection from webcam feed' },
+                    { icon: 'fas fa-sliders-h', title: 'Adjustable Accuracy', desc: 'Customizable detection threshold' },
+                    { icon: 'fas fa-upload', title: 'Image Upload', desc: 'Process static images' },
+                    { icon: 'fas fa-mobile-alt', title: 'Responsive Design', desc: 'Works on all devices' }
+                ],
+                implementation: `
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Backend Architecture</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Built with Flask framework providing RESTful API endpoints for image processing and model inference.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>YOLO model integration for object detection</li>
+                                <li>OpenCV for image processing</li>
+                                <li>Real-time video streaming capabilities</li>
+                                <li>Error handling and validation</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Frontend Development</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Modern, responsive interface using HTML5, CSS3, and JavaScript with Tailwind CSS for styling.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>Interactive controls for accuracy adjustment</li>
+                                <li>Real-time video preview</li>
+                                <li>Drag-and-drop file upload</li>
+                                <li>Loading states and progress indicators</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                github: 'https://github.com/ali0454hassan/VisionAi',
+                demo: '#'
+            },
+            'weather': {
+                title: 'Weather App - Real-time Weather Forecast',
+                description: 'A comprehensive weather application with location search and predictions',
+                image: './Assets/weather-app.png',
+                status: 'Completed',
+                duration: '2 Months',
+                teamSize: '1 Member',
+                role: 'Frontend Developer',
+                technologies: ['HTML5', 'CSS3', 'JavaScript', 'Weather API', 'Bootstrap'],
+                overview: `A responsive weather application that provides real-time weather information and 5-day forecasts. 
+                          Features location search, current conditions, and beautiful weather visualizations. Built with 
+                          vanilla JavaScript and integrates with OpenWeatherMap API for accurate weather data.`,
+                features: [
+                    { icon: 'fas fa-search', title: 'Location Search', desc: 'Search weather by city name' },
+                    { icon: 'fas fa-cloud-sun', title: '5-Day Forecast', desc: 'Extended weather predictions' },
+                    { icon: 'fas fa-thermometer-half', title: 'Detailed Info', desc: 'Temperature, humidity, wind speed' },
+                    { icon: 'fas fa-mobile-alt', title: 'Mobile Friendly', desc: 'Responsive design for all devices' }
+                ],
+                implementation: `
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">API Integration</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Integrated OpenWeatherMap API for real-time weather data and forecasts.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>Current weather conditions</li>
+                                <li>5-day weather forecast</li>
+                                <li>Geolocation support</li>
+                                <li>Error handling for API failures</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">User Interface</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Clean, intuitive interface with weather icons and smooth animations.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>Weather condition icons</li>
+                                <li>Temperature charts</li>
+                                <li>Search functionality</li>
+                                <li>Loading animations</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                github: '#',
+                demo: 'https://ali0454hassan.github.io/weather/'
+            },
+            'fitness': {
+                title: 'Fitness Tracker - Workout Progress App',
+                description: 'A comprehensive fitness tracking application with charts',
+                image: './Assets/fitness-app.webp',
+                status: 'Work in Progress',
+                duration: '4 Months',
+                teamSize: '2 Members',
+                role: 'Full Stack Developer',
+                technologies: ['HTML5', 'CSS3', 'JavaScript', 'Chart.js', 'Node.js', 'MongoDB'],
+                overview: `A comprehensive fitness tracking application that helps users monitor their workout progress, 
+                          set goals, and visualize their fitness journey. Features workout logging, progress charts, 
+                          and goal tracking with an intuitive dashboard.`,
+                features: [
+                    { icon: 'fas fa-chart-line', title: 'Progress Charts', desc: 'Visual progress tracking' },
+                    { icon: 'fas fa-dumbbell', title: 'Workout Logging', desc: 'Log exercises and sets' },
+                    { icon: 'fas fa-target', title: 'Goal Setting', desc: 'Set and track fitness goals' },
+                    { icon: 'fas fa-calendar', title: 'Workout Calendar', desc: 'Schedule and plan workouts' }
+                ],
+                implementation: `
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Data Visualization</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Interactive charts and graphs for tracking fitness progress over time.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>Chart.js for progress visualization</li>
+                                <li>Weight tracking graphs</li>
+                                <li>Workout frequency charts</li>
+                                <li>Goal achievement metrics</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Backend Services</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Node.js backend with MongoDB for data persistence and user management.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>User authentication system</li>
+                                <li>Workout data storage</li>
+                                <li>Progress calculation algorithms</li>
+                                <li>RESTful API endpoints</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                github: '#',
+                demo: '#'
+            },
+            'ecommerce': {
+                title: 'E-commerce Website - Online Store',
+                description: 'Full-featured online store with shopping cart',
+                image: './Assets/igor-miske-JVSgcV8_vb4-unsplash.jpg',
+                status: 'Work in Progress',
+                duration: '6 Months',
+                teamSize: '3 Members',
+                role: 'Full Stack Developer',
+                technologies: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js', 'MongoDB', 'Stripe'],
+                overview: `A full-featured e-commerce platform with product catalog, shopping cart, user authentication, 
+                          and secure payment processing. Built with React frontend and Node.js backend, featuring 
+                          modern design and smooth user experience.`,
+                features: [
+                    { icon: 'fas fa-shopping-cart', title: 'Shopping Cart', desc: 'Add, remove, and manage items' },
+                    { icon: 'fas fa-credit-card', title: 'Secure Payments', desc: 'Stripe payment integration' },
+                    { icon: 'fas fa-user', title: 'User Accounts', desc: 'Registration and profile management' },
+                    { icon: 'fas fa-search', title: 'Product Search', desc: 'Advanced search and filtering' }
+                ],
+                implementation: `
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Frontend Development</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Modern React application with responsive design and smooth user interactions.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>React with hooks for state management</li>
+                                <li>Responsive product catalog</li>
+                                <li>Shopping cart functionality</li>
+                                <li>User authentication forms</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-2">Backend Architecture</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                Robust Node.js backend with MongoDB database and secure payment processing.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1">
+                                <li>RESTful API with Express.js</li>
+                                <li>MongoDB for data storage</li>
+                                <li>Stripe payment integration</li>
+                                <li>JWT authentication</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                github: '#',
+                demo: '#'
+            }
+        };
+
+        // Get project from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('project') || 'visionai';
+        
+        // Load project data
+        function loadProject(id) {
+            const project = projectData[id];
+            if (!project) {
+                document.getElementById('project-title').textContent = 'Project Not Found';
+                document.getElementById('project-description').textContent = 'The requested project could not be found.';
+                return;
+            }
+            
+            // Update page content
+            document.title = `${project.title} - Portfolio`;
+            document.getElementById('project-title').textContent = project.title;
+            document.getElementById('project-description').textContent = project.description;
+            document.getElementById('project-image').src = project.image;
+            document.getElementById('project-image').alt = project.title;
+            
+            // Overview
+            document.getElementById('project-overview').innerHTML = `
+                <p class="text-gray-600 dark:text-gray-400">${project.overview}</p>
+            `;
+            
+            // Features
+            const featuresHTML = project.features.map(feature => `
+                <div class="flex items-start">
+                    <i class="${feature.icon} text-indigo-600 mr-3 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold">${feature.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">${feature.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('project-features').innerHTML = featuresHTML;
+            
+            // Implementation
+            document.getElementById('project-implementation').innerHTML = project.implementation;
+            
+            // Info
+            const statusColor = project.status === 'Completed' ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400';
+            document.getElementById('project-info').innerHTML = `
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Status:</span>
+                    <span class="${statusColor} font-semibold">${project.status}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Duration:</span>
+                    <span class="font-semibold">${project.duration}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Team Size:</span>
+                    <span class="font-semibold">${project.teamSize}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Role:</span>
+                    <span class="font-semibold">${project.role}</span>
+                </div>
+            `;
+            
+            // Technologies
+            document.getElementById('project-technologies').innerHTML = project.technologies.map(tech => `
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">${tech}</span>
+            `).join('');
+            
+            // Links
+            document.getElementById('project-links').innerHTML = `
+                <a href="${project.github}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
+                    <i class="fab fa-github mr-2"></i> GitHub Repository
+                </a>
+                <a href="${project.demo}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center">
+                    <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                </a>
+            `;
+            
+            // Gallery (multiple images)
+            if (project.images && project.images.length > 0) {
+                document.getElementById('project-gallery').innerHTML = project.images.map((img, idx) => `
+                    <div class="relative group">
+                        <img src="${img}" alt="Gallery Image ${idx+1}" class="w-full h-56 object-cover rounded shadow transition duration-300 cursor-pointer hover:scale-105"
+                            onclick="openGalleryModal('${img}')"
+                        >
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('project-gallery').innerHTML = `<p class="text-gray-600 dark:text-gray-400">No gallery images available.</p>`;
+            }
+        }
+
+        // Gallery Modal (inside card size)
+        function openGalleryModal(imgSrc) {
+            // Create modal if not exists
+            let modal = document.getElementById('gallery-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'gallery-modal';
+                modal.className = 'fixed inset-0 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-4 relative max-w-lg w-full flex flex-col items-center">
+                        <button onclick="closeGalleryModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl">&times;</button>
+                        <img id="gallery-modal-img" src="${imgSrc}" class="max-h-80 w-auto rounded shadow mb-2" />
+                    </div>
+                    <div class="fixed inset-0 bg-black bg-opacity-60" onclick="closeGalleryModal()"></div>
+                `;
+                document.body.appendChild(modal);
+            } else {
+                document.getElementById('gallery-modal-img').src = imgSrc;
+                modal.style.display = 'flex';
+            }
+        }
+        function closeGalleryModal() {
+            const modal = document.getElementById('gallery-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // Load project on page load
+        window.onload = function() {
+            loadProject(projectId);
+        };
+
+        // Dark mode toggle logic with localStorage
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+
+        // Apply dark mode from localStorage on page load
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            document.body.classList.remove('dark-mode');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+
+        // Toggle dark mode and save to localStorage
+        darkModeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            if (isDark) {
+                localStorage.setItem('dark-mode', 'enabled');
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
