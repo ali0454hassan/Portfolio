@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
     <link rel="stylesheet" href="Style.css">
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200" x-data="{ darkMode: false, isOpen: false }">
@@ -217,7 +218,7 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
+<!-- Projects Section -->
     <section id="projects" class="py-16 bg-gray-100 dark:bg-gray-800">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold mb-2 text-center">My Projects</h2>
@@ -228,10 +229,10 @@
                 
 <!-- Project 1 -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg project-card">
-                    <img src="./Assets/VisionAI-obj.png" alt="VisionAI web" class="w-full h-50 object-cover">
+                    <img src="./Assets/VisionAI-obj.png" alt="VisionAI App" class="w-full h-50 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">VisionAI</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">Real-time Oject detection with adjust able accuracy-rate Based on Computer vision & ML</p>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Real-time Object detection with adjustable accuracy-rate Based on Computer vision & ML</p>
                         <p class="text-sm font-semibold mb-4">
                           <span class="text-gray-600 dark:text-gray-300">Status:</span>
                           <span class="text-green-600 dark:text-green-400">Completed</span>
@@ -244,14 +245,18 @@
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">Flask</span>
                         </div>
 
-                        <div class="flex justify-between">
-                            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">View Demo</a>
-                            <a href="https:github.com/ali0454hassan/VisionAi" class="text-indigo-600 dark:text-indigo-400 hover:underline">Source Code</a>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Demo</a>
+                                <a href="https://github.com/ali0454hassan/VisionAi" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm" target="_blank">Code</a>
+                            </div>
+                            <a href="project-details.html?project=visionai" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300 text-sm">View Details</a>
                         </div>
                     </div>
                 </div>
                 
 
+                
 
 <!-- Project 2 -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg project-card">
@@ -269,9 +274,12 @@
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">JavaScript</span>
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">API</span>
                         </div>
-                        <div class="flex justify-between">
-                            <a href="https://ali0454hassan.github.io/weather/"  class="text-indigo-600 dark:text-indigo-400 hover:underline" target="_blank">View Demo</a>
-                            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">Source Code</a>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <a href="https://ali0454hassan.github.io/weather/" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm" target="_blank">Demo</a>
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Code</a>
+                            </div>
+                            <a href="project-details.html?project=weather" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300 text-sm">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -283,7 +291,7 @@
                         <p class="text-gray-600 dark:text-gray-400 mb-4">A workout tracking application with progress charts and goal setting features.</p>
                         <p class="text-sm font-semibold mb-4">
                           <span class="text-gray-600 dark:text-gray-300">Status:</span>
-                          <span class="text-yellow-600 dark:text-green-400">Work in Progress</span>
+                          <span class="text-yellow-600 dark:text-yellow-400">Work in Progress</span>
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">HTML</span>
@@ -291,9 +299,12 @@
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">JavaScript</span>
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">Chart.js</span>
                         </div>
-                        <div class="flex justify-between">
-                            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">View Demo</a>
-                            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">Source Code</a>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Demo</a>
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Code</a>
+                            </div>
+                            <a href="project-details.html?project=fitness" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300 text-sm">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -307,7 +318,7 @@
                         <p class="text-gray-600 dark:text-gray-400 mb-4">A full-featured online store with product catalog, shopping cart, and checkout process.</p>
                         <p class="text-sm font-semibold mb-4">
                           <span class="text-gray-600 dark:text-gray-300">Status:</span>
-                          <span class="text-yellow-600 dark:text-green-400">Work in Progress</span>
+                          <span class="text-yellow-600 dark:text-yellow-400">Work in Progress</span>
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">HTML</span>
@@ -315,9 +326,12 @@
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">JavaScript</span>
                             <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">React</span>
                         </div>
-                        <div class="flex justify-between">
-                            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">View Demo</a>
-                            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">Source Code</a>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Demo</a>
+                                <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">Code</a>
+                            </div>
+                            <a href="project-details.html?project=ecommerce" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300 text-sm">View Details</a>
                         </div>
                     </div>
                 </div>
